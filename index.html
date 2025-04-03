@@ -1,0 +1,34 @@
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { quotes } from "@/data/quotes";
+
+export default function AnimatedQuotes() {
+  const [index, setIndex] = useState(0);
+
+  const nextQuote = () => {
+    setIndex((prevIndex) => (prevIndex + 1) % quotes.length);
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-4">
+      <motion.div
+        key={index}
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 20 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Card className="p-6 bg-white shadow-xl rounded-2xl max-w-lg text-center">
+          <CardContent>
+            <p className="text-xl font-semibold text-gray-800">{quotes[index]}</p>
+          </CardContent>
+        </Card>
+      </motion.div>
+      <Button onClick={nextQuote} className="mt-6 px-6 py-2 bg-white text-blue-600 rounded-lg shadow-md hover:bg-gray-200 transition">
+        Próxima Frase
+      </Button>
+    </div>
+  );
+}
